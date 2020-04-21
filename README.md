@@ -8,9 +8,11 @@
 <p align="center">  
   <img alt="Made by Rui" src="https://img.shields.io/badge/Made%20by-ruiblaese-%2304D361">
   
-  <img alt="Made" src="https://img.shields.io/badge/Made%20with-Java-%1f425f">  
+  <img alt="Made with Java" src="https://img.shields.io/badge/Made%20with-Java-%1f425f">  
   
-  <img alt="Made" src="https://img.shields.io/badge/Made%20with-SpringBoot-%1f425f">  
+  <img alt="Made with SpringBoot" src="https://img.shields.io/badge/Made%20with-SpringBoot-%1f425f">  
+
+  <img alt="CircleCI" src="https://circleci.com/gh/ruiblaese/codenation-aceleradev-java-project.svg?style=shield">    
 </p>
  
 <p align="center">
