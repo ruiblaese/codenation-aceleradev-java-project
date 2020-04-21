@@ -1,5 +1,9 @@
 package com.blaese.error.manager.repository;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import com.blaese.error.manager.entity.User;
 import org.junit.After;
 import org.junit.Before;
@@ -36,7 +40,7 @@ public class UserRepositoryTest {
 
     @After
     public void tearDown(){
-
+        repository.deleteAll();
     }
 
     @Test
@@ -57,7 +61,7 @@ public class UserRepositoryTest {
         Optional<User> response = repository.findByEmailEquals(EMAIL);
 
         assertTrue(response.isPresent());
-        assertEquals(EMAIL,response.get().getEmail());
+        assertEquals(response.get().getEmail(), EMAIL);
 
     }
 
