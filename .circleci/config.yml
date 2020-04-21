@@ -10,6 +10,4 @@ workflows:
       - maven/test 
   heroku_deploy:
     jobs:      
-      - heroku/deploy-via-git: 
-          requires:
-            - maven_test
+      - heroku/deploy-via-git
