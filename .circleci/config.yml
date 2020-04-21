@@ -8,11 +8,10 @@ workflows:
     jobs:
       - maven/test # checkout, build, test, and upload test results
   heroku_deploy:
-    jobs:
-      - build
+    jobs:      
       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
           requires:
-            - build
+            - maven_test
           filters:
             branches:
               only: sequential-branch-filter
