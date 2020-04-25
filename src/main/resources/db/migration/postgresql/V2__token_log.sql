@@ -1,5 +1,6 @@
 create table token(
 	id serial not null,
+	users integer references users(id),
 	parent integer references token(id),
 	description varchar(50) not null,
 	token varchar(32) not null,
@@ -14,7 +15,6 @@ create table log(
     details text,
     environment integer,
     level integer,
-    user integer references users(id),
     token integer references token(id),
     primary key (id)
 )

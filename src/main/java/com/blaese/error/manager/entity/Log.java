@@ -33,12 +33,8 @@ public class Log implements Serializable {
     @Column(nullable = false)
     private Level level;
 
-    @Column(nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
-    @Column(nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "token", referencedColumnName = "id")
     private Token token;
 
 }

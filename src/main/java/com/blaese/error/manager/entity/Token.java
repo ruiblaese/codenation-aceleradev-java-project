@@ -1,5 +1,6 @@
 package com.blaese.error.manager.entity;
 
+import com.blaese.error.manager.util.enums.Util;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,7 +17,12 @@ public class Token implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users", referencedColumnName = "id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent", referencedColumnName = "id")
     private Token parent;
 
     @Column(nullable = false)
@@ -28,6 +34,8 @@ public class Token implements Serializable {
     @Column(nullable = false)
     private Boolean active;
 
-
-
+    public Token() {
+        this.active = true;
+        this.token = Util.generateToken();
+    }
 }
