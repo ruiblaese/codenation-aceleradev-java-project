@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="Code Nation" src="https://media-exp1.licdn.com/dms/image/C4E1BAQEP1qSz0r5URg/company-background_10000/0?e=1587924000&v=beta&t=5AoiLHSWW8AkAe1uZOMqm6LkYXTQpImxyBQJGM1FXwA" />
+    <img alt="Code Nation" src="https://github.com/ruiblaese/codenation-aceleradev-java-project/blob/log/.github/codenation.jpeg?raw=true" />
 </p>
 
 <h1 align="center">

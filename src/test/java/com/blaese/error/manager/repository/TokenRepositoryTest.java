@@ -80,9 +80,9 @@ public class TokenRepositoryTest {
 
         repository.save(changed);
 
-        Optional<Token> newWalletItem = repository.findById(savedTokenId);
+        Optional<Token> savedNewToken = repository.findById(savedTokenId);
 
-        assertEquals(description, newWalletItem.get().getDescription());
+        assertEquals(description, savedNewToken.get().getDescription());
 
     }
 
@@ -102,8 +102,5 @@ public class TokenRepositoryTest {
         assertFalse(response.isPresent());
 
     }
-
-
-
 
 }
