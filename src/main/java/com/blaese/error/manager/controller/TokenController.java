@@ -7,19 +7,22 @@ import com.blaese.error.manager.entity.User;
 import com.blaese.error.manager.response.Response;
 import com.blaese.error.manager.service.TokenService;
 import com.blaese.error.manager.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 
 @RestController
 @RequestMapping("token")
+@Api(value = "Token",  tags = { "Token" })
+@ApiOperation(value = "Token")
 public class TokenController {
 
     @Autowired
@@ -29,7 +32,11 @@ public class TokenController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<Response<TokenDTO>> create(@Valid @RequestBody TokenDTO dto, BindingResult result){
+    @ApiOperation(value = "Cadastra Token", response = TokenDTO.class)
+    public ResponseEntity<Response<TokenDTO>> create(@Valid @RequestBody TokenDTO dto,
+                                                     @ApiIgnore
+                                                     @RequestAttribute String userLoginEmail,
+                                                     BindingResult result){
 
         Response<TokenDTO> response = new Response<TokenDTO>();
 
