@@ -12,12 +12,18 @@
   
   <img alt="Made with SpringBoot" src="https://img.shields.io/badge/Made%20with-SpringBoot-%1f425f">  
 
-  <img alt="CircleCI" src="https://circleci.com/gh/ruiblaese/codenation-aceleradev-java-project.svg?style=shield">    
+  <img alt="CircleCI" src="https://circleci.com/gh/ruiblaese/codenation-aceleradev-java-project.svg?style=shield">  
+
+<img alt="Project top programing language" src="https://img.shields.io/github/languages/top/ruiblaese/codenation-aceleradev-java-project">  
+
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/ruiblaese/codenation-aceleradev-java-project">
 </p>
  
 <p align="center">
     <a href="#central-de-erros">Proposta: Central de Erros</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    <a href="#desenvolvimento">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;    
+    <a href="#desenvolvimento">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#deploy-heroku">Deploy Heroku</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#contato">Contato</a>
 </p>
  
 
@@ -46,8 +52,97 @@ Deve permitir a busca de um evento por um ID, dessa maneira exibindo o LOG desse
 
 ## Desenvolvimento
 
-### Links
-Authorization (lock symbol) is rendered incorrectly - https://github.com/swagger-api/swagger-ui/issues/4402
+### Detalhes do projeto
+* Implementado utilizado TDD
+* Projeto criado com Spring Boot e Java 8
+* Banco de dados Postgres com JPA e Spring Data JPA
+* Versionamento de banco de dados com Flyway
+* Testes com JUnit e Mockito com banco H2 em memória
+* Deploy no servidor Heroku (instância gratuita)
+* Integração contínua com CircleCI
+* Project Lombok
+* Documentação dos endpoints com Swagger
+* Segurança da API com autenticação via tokens JWT 
+
+### Requerimentos
+- Java 8
+- Docker
+
+### Como executar a aplicação
+```bash
+git clone https://github.com/ruiblaese/codenation-aceleradev-java-project
+cd codenation-aceleradev-java-project
+docker-compose up -d db
+./mvnw spring-boot:run
+# Acesse os endpoints através da url http://# localhost:8080
+```
+
+Também é possível compilar o projeto para executar em um ambiente de produção, para isso execute o seguinte comando na raiz do projeto
+
+```bash
+./mvnw clean install
+```
+
+O pacote será gerado dentro da pasta target, basta executá-lo com o comando abaixo, não esquecendo de configurar qual o profile e a porta que a aplicação deverá utilizar.
+Também é necessário criar uma variável de ambiente com as credenciais de acesso ao banco de dados com o nome $DATABASE_URL ou alterar o arquivo application-prod.properties.
+
+```bash
+java -jar -Dspring.profiles.active=prod -Dserver.port=443 error.manager-0.0.1-SNAPSHOT.jar
+```
+### Como autenticar na API
+Antes de fazer requisições nos endpoint você deve estar autenticado, antes crie um usuário através de uma requisição POST na rota */user* como no exemplo abaixo:
+
+```json
+{
+	"name": "user",
+	"email": "user@user.com",
+	"password": "123456"
+}
+```
+Exemplo requisição acima com cURL: 
+```bash
+curl -X POST "http://localhost:8080/user" -H "accept: */*" -H "Content-Type: application/json" -d "{\t\"name\": \"user\",\t\"email\": \"user@user.com\",\t\"password\": \"123456\"}"
+```
+
+Agora você pode autenticar na API e obter um token de acesso através do endpoint */auth*, utilizando o email e a senha cadastrados:
+
+```json
+{
+	"email": "user@user.com",
+	"password":"123456"
+}
+```
+
+Exemplo requisição acima com cURL: 
+```bash
+curl -X POST "http://localhost:8080/auth" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"email\": \"user@user.com\", \"password\": \"123456\"}"
+```
+
+
+Você receberá um token do tipo Bearer que deve ser enviado no cabeçalho das requisições.
+
+Exemplo requisição com Bearer: 
+```bash
+curl -X GET "http://localhost:8080/log" -H "accept: */*" -H "Authorization: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQHVzZXIuY29tIiwicm9sZSI6bnVsbCwiY3JlYXRlZCI6MTU4ODQ1NTc4MDgyNCwiZXhwIjoxNTg4NDYxNzgwfQ.tg--NuT6f51oNOqubVDFaZi70UPDkaqZJSXfCiYqe_6EybHdXu2zKvVjhDn3NAHLqLN_if4ATsUvfw27d7Yp9A"
+```
+
+Todos esses exemplos e outros podem ser encontrados e testados na documentação swagger.
+
+#### Como executar os testes
+Os testes podem ser executados com o seguinte comando:
+
+```bash
+./mvnw test
+```
+
+#### Documentação
+Utilize a interface do Swagger para ter acesso a documentação dos endpoints, ela está disponível na url http://localhost:8080/swagger-ui.html
+
+
+## Deploy Heroku
+- API: https://blaese-error-manager.herokuapp.com/   
+- Swagger: https://blaese-error-manager.herokuapp.com/swagger-ui.html  
+
 
 ## Contato
 
