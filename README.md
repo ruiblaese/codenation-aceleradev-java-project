@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="Code Nation" src="https://github.com/ruiblaese/codenation-aceleradev-java-project/blob/log/.github/codenation.jpeg?raw=true" />
+    <img alt="Code Nation" src="https://github.com/ruiblaese/codenation-aceleradev-java-project/.github/codenation.jpeg?raw=true" />
 </p>
 
 <h1 align="center">
