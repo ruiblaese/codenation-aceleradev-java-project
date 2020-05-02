@@ -1,6 +1,5 @@
 package com.blaese.error.manager.response;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

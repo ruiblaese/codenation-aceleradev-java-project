@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="Code Nation" src="https://media-exp1.licdn.com/dms/image/C4E1BAQEP1qSz0r5URg/company-background_10000/0?e=1587567600&v=beta&t=i_JdjJmQuprXjyz6vuHYcxC20VMFLSQNSS5Igfqnv4M" />
+    <img alt="Code Nation" src="https://github.com/ruiblaese/codenation-aceleradev-java-project/blob/log/.github/codenation.jpeg?raw=true" />
 </p>
 
 <h1 align="center">
@@ -46,6 +46,8 @@ Deve permitir a busca de um evento por um ID, dessa maneira exibindo o LOG desse
 
 ## Desenvolvimento
 
+### Links
+Authorization (lock symbol) is rendered incorrectly - https://github.com/swagger-api/swagger-ui/issues/4402
 
 ## Contato
 
