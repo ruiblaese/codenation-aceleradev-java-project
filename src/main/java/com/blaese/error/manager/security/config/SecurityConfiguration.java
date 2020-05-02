@@ -71,8 +71,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				"/swagger-resources/**",
 				"/swagger-ui.html",
 				"/").permitAll()
-				.and().authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/user").permitAll()
+				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/user").permitAll()
+				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/log").permitAll()
 				.anyRequest().authenticated();
 		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 		http.headers().cacheControl();

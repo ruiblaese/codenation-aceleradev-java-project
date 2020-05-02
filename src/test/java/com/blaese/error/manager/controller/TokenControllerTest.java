@@ -57,6 +57,9 @@ public class TokenControllerTest {
         BDDMockito.given(service.save(Mockito.any(Token.class)))
                 .willReturn(getMockToken());
 
+        BDDMockito.given(service.findByToken(Mockito.anyString()))
+                .willReturn(Optional.empty());
+
         mvc.perform(
                 MockMvcRequestBuilders
                         .post(POST_GET_URL)

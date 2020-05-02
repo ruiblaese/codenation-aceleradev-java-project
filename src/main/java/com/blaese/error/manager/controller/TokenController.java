@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,25 +41,29 @@ public class TokenController {
                                                      @RequestAttribute String loggedUserId,
                                                      BindingResult result) {
 
-        System.out.println(loggedUserId);
-
         Response<TokenDTO> response = new Response<TokenDTO>();
 
         if (result.hasErrors()) {
             result.getAllErrors().forEach(e -> response.getErrors().add(e.getDefaultMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
         if (!dto.getUser().equals(Long.valueOf(loggedUserId))){
             response.getErrors().add("Usuário do Token diferente do usuário logado.");
-        }
-
-        if (response.getErrors().size() > 0){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        if (dto.getToken().isEmpty()){
-            dto.setToken(Util.generateToken());
+        if ((dto.getToken() != null)&&(!dto.getToken().isEmpty())){
+
+            Optional<Token> tokenExistent = service.findByToken(dto.getToken());
+
+            if (tokenExistent.isPresent()) {
+                response.getErrors().add("Token já cadastro, envie nulo para gerar um novo token aleatorio");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            }
         }
+        dto.setToken(getNewTokenNoExitent());
+
         if (dto.getActive() == null){
             dto.setActive(true);
         }
@@ -68,6 +73,16 @@ public class TokenController {
         response.setData(this.convertEntityToDto(token));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    private String getNewTokenNoExitent() {
+        String newToken = Util.generateToken();
+        Optional<Token> tokenExiToken = service.findByToken(newToken);
+        while (tokenExiToken.isPresent()){
+            newToken = Util.generateToken();
+            tokenExiToken = service.findByToken(newToken);
+        }
+        return newToken;
     }
 
     @PutMapping("/{id}")

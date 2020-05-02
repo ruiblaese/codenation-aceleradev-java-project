@@ -6,6 +6,8 @@ import com.blaese.error.manager.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LogServiceImpl implements LogService {
 
@@ -15,6 +17,11 @@ public class LogServiceImpl implements LogService {
     @Override
     public Log save(Log log) {
         return repository.save(log);
+    }
+
+    @Override
+    public List<Log> findAllByUserId(Long user) {
+        return repository.findByTokenUserIdEquals(user);
     }
 
 }
