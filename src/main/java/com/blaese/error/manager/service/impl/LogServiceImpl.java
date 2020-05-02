@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LogServiceImpl implements LogService {
@@ -22,6 +23,11 @@ public class LogServiceImpl implements LogService {
     @Override
     public List<Log> findAllByUserId(Long user) {
         return repository.findByTokenUserIdEquals(user);
+    }
+
+    @Override
+    public Optional<Log> findByIdAndUserId(Long id, Long userId) {
+        return repository.findByIdEqualsAndTokenUserIdEquals(id, userId);
     }
 
 }

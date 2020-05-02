@@ -64,6 +64,7 @@ public class LogControllerTest {
     private static final String POST_URL = "/log";
     private static final String GET_URL = "/log";
     private static final String PUT_URL = "/log/1";
+    private static final String GET_URL_BY_ID = "/log/1";
 
     @Test
     public void testSave() throws Exception {
@@ -101,6 +102,26 @@ public class LogControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").isArray())
                 .andExpect(jsonPath("$.data[0].id").value(ID));
+    }
+
+    @Test
+    @WithMockUser
+    public void testFindById() throws Exception{
+
+        Optional<Log> log = Optional.of(getMockLog());
+
+        BDDMockito.given(service.findByIdAndUserId(ID,USER_ID))
+                .willReturn(log);
+
+        mvc.perform(
+                MockMvcRequestBuilders
+                        .get(GET_URL_BY_ID)
+                        .requestAttr("loggedUserId", USER_ID)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data").isNotEmpty())
+                .andExpect(jsonPath("$.data.id").value(ID))
+                .andExpect(jsonPath("$.data.details").isNotEmpty());
     }
 
     private Optional<Token> getMockToken() {

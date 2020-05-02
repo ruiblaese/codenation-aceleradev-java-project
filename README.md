@@ -60,7 +60,7 @@ Deve permitir a busca de um evento por um ID, dessa maneira exibindo o LOG desse
   * Filtrar eventos por qualquer parâmetro especificado :x:
   * Suportar paginação :x:
   * Suportar ordenação por diferentes tipos de atributos :x:
-* Permitir busca de evento por um Id :x:
+* Permitir busca de evento por um Id :heavy_check_mark:
 
 ### Detalhes do projeto
 * Projeto criado com Spring Boot e Java 8

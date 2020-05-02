@@ -83,6 +83,36 @@ public class LogController {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("/{id}")
+    @ApiOperation(
+            value = "Retorna log completo"
+    )
+    public ResponseEntity<Response<LogDTO>> findByIDAndUser(@PathVariable("id") Long id,
+                                                            @ApiIgnore @RequestAttribute String loggedUserId) {
+
+        Response<LogDTO> response = new Response<LogDTO>();
+
+        Optional<Log> log =  service.findByIdAndUserId(id, Long.valueOf(loggedUserId));
+
+        if (!log.isPresent()){
+            response.getErrors().add("Log não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+        LogDTO dto = new LogDTO();
+        dto.setId(log.get().getId());
+        dto.setDate(log.get().getDate());
+        dto.setTitle(log.get().getTitle());
+        dto.setDetails(log.get().getDetails());
+        dto.setLevel(log.get().getLevel());
+        dto.setEnvironment(log.get().getEnvironment());
+        dto.setToken(log.get().getToken().getToken());
+
+        response.setData(dto);
+
+        return ResponseEntity.ok().body(response);
+    }
+
     private Log convertDtoToEntity(LogDTO dto) {
 
         Optional<Token> token = tokenService.findByToken(dto.getToken());
