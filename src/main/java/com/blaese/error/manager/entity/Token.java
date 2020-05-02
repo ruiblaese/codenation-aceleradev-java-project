@@ -34,8 +34,4 @@ public class Token implements Serializable {
     @Column(nullable = false)
     private Boolean active;
 
-    public Token() {
-        this.active = true;
-        this.token = Util.generateToken();
-    }
 }

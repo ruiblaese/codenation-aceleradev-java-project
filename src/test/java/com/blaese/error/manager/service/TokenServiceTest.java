@@ -14,9 +14,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -36,6 +40,20 @@ public class TokenServiceTest {
                 repository.findByTokenEquals(Mockito.anyString())
         ).willReturn(Optional.of(new Token()));
 
+        User user = new User();
+        user.setId(1L);
+
+        Token token = new Token();
+        token.setDescription("test token");
+        token.setUser(user);
+
+        List<Token> tokenList = new ArrayList<Token>();
+        tokenList.add(token);
+
+        BDDMockito.given(
+                repository.findByUserIdEquals(1L)
+        ).willReturn(tokenList);
+
     }
 
     @Test
@@ -44,5 +62,14 @@ public class TokenServiceTest {
 
         assertTrue(token.isPresent());
     }
+
+    @Test
+    public void testFindByUser() {
+        List<Token> tokenList = service.findAllByUserId(1L);
+
+        assertFalse(tokenList.isEmpty());
+        assertEquals(tokenList.get(0).getUser().getId(), 1L);
+    }
+
 
 }

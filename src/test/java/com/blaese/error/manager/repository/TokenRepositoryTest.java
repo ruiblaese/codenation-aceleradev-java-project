@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
@@ -23,8 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @ActiveProfiles("test")
 public class TokenRepositoryTest {
 
+    private static final String TOKEN = "12345678901234567890123456789012";
     private Long savedTokenId = null;
     private Long savedUserId = null;
+
 
     @Autowired
     TokenRepository repository;
@@ -44,6 +47,8 @@ public class TokenRepositoryTest {
         Token token = new Token();
         token.setDescription("Application Test");
         token.setUser(responseUser);
+        token.setToken(TOKEN);
+        token.setActive(true);
         Token response = repository.save(token);
         savedTokenId = response.getId();
     }
@@ -61,6 +66,8 @@ public class TokenRepositoryTest {
 
         Token token = new Token();
         token.setDescription("Application 1");
+        token.setToken(TOKEN);
+        token.setActive(true);
         token.setUser(user.get());
 
         Token response = repository.save(token);
@@ -93,6 +100,8 @@ public class TokenRepositoryTest {
         Token token = new Token();
         token.setDescription("Application 1");
         token.setUser(user.get());
+        token.setToken(TOKEN);
+        token.setActive(true);
 
         Token savedToken = repository.save(token);
         repository.deleteById(savedToken.getId());
@@ -100,6 +109,22 @@ public class TokenRepositoryTest {
         Optional<Token> response = repository.findById(savedToken.getId());
 
         assertFalse(response.isPresent());
+    }
+
+    @Test
+    public void testFindByToken() {
+
+        Optional<Token> token = repository.findByTokenEquals(TOKEN);
+        assertTrue(token.isPresent());
+        assertEquals(token.get().getId(), savedTokenId);
+    }
+
+    @Test
+    public void testFindByUser() {
+
+        List<Token> listToken = repository.findByUserIdEquals(savedUserId);
+        assertFalse(listToken.isEmpty());
+        assertEquals(listToken.get(0).getId(), savedTokenId);
 
     }
 

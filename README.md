@@ -46,6 +46,8 @@ Deve permitir a busca de um evento por um ID, dessa maneira exibindo o LOG desse
 
 ## Desenvolvimento
 
+### Links
+Authorization (lock symbol) is rendered incorrectly - https://github.com/swagger-api/swagger-ui/issues/4402
 
 ## Contato
 

@@ -5,6 +5,7 @@ import com.blaese.error.manager.entity.Token;
 import com.blaese.error.manager.entity.User;
 import com.blaese.error.manager.util.enums.Environment;
 import com.blaese.error.manager.util.enums.Level;
+import com.blaese.error.manager.util.enums.Util;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,6 +54,8 @@ public class LogRepositoryTest {
 
         Token token = new Token();
         token.setDescription("Application Test");
+        token.setActive(true);
+        token.setToken(Util.generateToken());
         token.setUser(responseUser);
         Token responseToken = tokenRepository.save(token);
         savedTokenId = responseToken.getId();

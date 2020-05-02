@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class UserController {
     private UserService service;
 
     @PostMapping
-    @ApiOperation(value = "Cadastra Usuário", response = TokenDTO.class)
+    @ApiOperation(value = "Cadastra Usuário de acesso", response = TokenDTO.class)
     public ResponseEntity<Response<UserDTO>> create(@Valid @RequestBody UserDTO dto, BindingResult result){
 
         Response<UserDTO> response = new Response<UserDTO>();

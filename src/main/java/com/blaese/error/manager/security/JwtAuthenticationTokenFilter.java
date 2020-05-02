@@ -1,6 +1,8 @@
 package com.blaese.error.manager.security;
 
+import com.blaese.error.manager.entity.User;
 import com.blaese.error.manager.security.utils.JwtTokenUtil;
+import com.blaese.error.manager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
@@ -25,6 +28,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
 	@Autowired
     private JwtTokenUtil jwtTokenUtil;
+
+	@Autowired
+    private UserService userService;
 
 	@Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -42,7 +48,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                request.setAttribute("userLoginEmail", userLoginEmail);
+
+                Optional<User> loggedUser = userService.findByEmail(userLoginEmail);
+                Long loggedUserId = null;
+                if (loggedUser.isPresent()){
+                    loggedUserId = loggedUser.get().getId();
+                }
+                request.setAttribute("loggedUserId", loggedUserId);
             }
         }
 
