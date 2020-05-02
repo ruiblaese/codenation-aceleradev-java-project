@@ -1,11 +1,9 @@
 package com.blaese.error.manager.entity;
 
-import com.blaese.error.manager.util.enums.Util;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 @Entity
 @Data

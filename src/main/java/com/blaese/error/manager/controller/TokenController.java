@@ -1,7 +1,6 @@
 package com.blaese.error.manager.controller;
 
 import com.blaese.error.manager.dto.TokenDTO;
-import com.blaese.error.manager.dto.UserDTO;
 import com.blaese.error.manager.entity.Token;
 import com.blaese.error.manager.entity.User;
 import com.blaese.error.manager.response.Response;

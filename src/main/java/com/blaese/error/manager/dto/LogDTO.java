@@ -1,6 +1,5 @@
 package com.blaese.error.manager.dto;
 
-import com.blaese.error.manager.entity.Token;
 import com.blaese.error.manager.util.enums.Environment;
 import com.blaese.error.manager.util.enums.Level;
 import lombok.Data;
