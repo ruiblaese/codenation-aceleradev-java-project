@@ -52,10 +52,20 @@ Deve permitir a busca de um evento por um ID, dessa maneira exibindo o LOG desse
 
 ## Desenvolvimento
 
+### Checklist funcionalidades
+* Autenticação da aplicação gerando Token de Acesso :heavy_check_mark:
+* Acesso por multiplos sistemas :heavy_check_mark:
+* Permitir gravar registros de eventos :heavy_check_mark:
+* Permitir listagem dos eventos :heavy_check_mark:
+  * Filtrar eventos por qualquer parâmetro especificado :x:
+  * Suportar paginação :x:
+  * Suportar ordenação por diferentes tipos de atributos :x:
+* Permitir busca de evento por um Id :x:
+
 ### Detalhes do projeto
-* Implementado utilizado TDD
 * Projeto criado com Spring Boot e Java 8
 * Banco de dados Postgres com JPA e Spring Data JPA
+* Implementado utilizado TDD
 * Versionamento de banco de dados com Flyway
 * Testes com JUnit e Mockito com banco H2 em memória
 * Deploy no servidor Heroku (instância gratuita)
