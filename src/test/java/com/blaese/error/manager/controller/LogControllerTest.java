@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -90,19 +92,21 @@ public class LogControllerTest {
         List<Log> listToken = new ArrayList<Log>();
         listToken.add(getMockLog());
         listToken.add(getMockLog());
+        Page<Log> page = new PageImpl<>(listToken);
 
-        /*
-        BDDMockito.given(service.findAllByUserId(USER_ID, 0))
-                .willReturn(listToken);
-        */
+
+        BDDMockito.given(service.findByUserIdAndOptionalParams(USER_ID, null, null, null, null, null,null,null,0))
+                .willReturn(page);
+
         mvc.perform(
                 MockMvcRequestBuilders
                         .get(GET_URL)
                         .requestAttr("loggedUserId", USER_ID)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data").isArray())
-                .andExpect(jsonPath("$.data[0].id").value(ID));
+                .andExpect(jsonPath("$.data").isNotEmpty())
+                .andExpect(jsonPath("$.data.content").isArray())
+                .andExpect(jsonPath("$.data.content[0].id").value(ID));
     }
 
     @Test
