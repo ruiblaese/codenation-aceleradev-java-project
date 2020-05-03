@@ -8,10 +8,14 @@ import com.blaese.error.manager.entity.User;
 import com.blaese.error.manager.response.Response;
 import com.blaese.error.manager.service.LogService;
 import com.blaese.error.manager.service.TokenService;
+import com.blaese.error.manager.util.enums.Environment;
+import com.blaese.error.manager.util.enums.Level;
 import com.blaese.error.manager.util.enums.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -70,15 +74,37 @@ public class LogController {
     @ApiOperation(
             value = "Retorna todos os logs do usuário"
     )
-    public ResponseEntity<Response<List<LogDTO>>> findAllByUser(@ApiIgnore @RequestAttribute String loggedUserId) {
+    public ResponseEntity<Response<Page<LogDTO>>> findAllByUser(@ApiIgnore @RequestAttribute String loggedUserId,
+                                                                @ApiParam(name = "Data Inicial") @RequestParam("initialData") Optional<String> initialData,
+                                                                @ApiParam(name = "Data Final") @RequestParam("finalData") Optional<String> finalData,
+                                                                @ApiParam(name = "Título") @RequestParam("title") Optional<String> title,
+                                                                @ApiParam(name = "Level", allowableValues = "ERROR,WARNING,DEBUG") @RequestParam("level") Optional<Level> level,
+                                                                @ApiParam(name = "Environment", allowableValues = "HOMOLOGATION,PRODUCTION,DEVELOPMENT") @RequestParam("environment") Optional<Environment> environment,
+                                                                @ApiParam(name = "Token") @RequestParam("token") Optional<String> token,
+                                                                @ApiParam(name = "Ordenação", allowableValues = "date:asc,date:desc,title:asc,title:desc,level,environment,token") @RequestParam("sort") Optional<String> sort,
+                                                                @ApiParam(name = "Pagina")@RequestParam(name = "page", defaultValue = "0") int page
+                                                                ) {
 
-        ArrayList<Log> list = (ArrayList<Log>) service.findAllByUserId(Long.valueOf(loggedUserId));
 
-        List<LogDTO> listDTO = new ArrayList<>();
-        list.forEach(entity -> listDTO.add(convertEntityToDto(entity)));
+        Page<Log> pageLog = service.findByUserIdAndOptionalParams(
+                Long.valueOf(loggedUserId),
+                initialData.orElse(null),
+                finalData.orElse(null),
+                title.orElse(null),
+                level.orElse(null),
+                environment.orElse(null),
+                token.orElse(null),
+                sort.orElse(null),
+                page
+                );
 
-        Response<List<LogDTO>> response = new Response<List<LogDTO>>();
-        response.setData(listDTO);
+
+        // Page<Log> pageLog = service.findAllByUserId(Long.valueOf(loggedUserId), page);
+
+        Page<LogDTO> pageLogDTO = pageLog.map(i -> this.convertEntityToDto(i));
+
+        Response<Page<LogDTO>> response = new Response<Page<LogDTO>>();
+        response.setData(pageLogDTO);
 
         return ResponseEntity.ok().body(response);
     }

@@ -91,9 +91,10 @@ public class LogControllerTest {
         listToken.add(getMockLog());
         listToken.add(getMockLog());
 
-        BDDMockito.given(service.findAllByUserId(USER_ID))
+        /*
+        BDDMockito.given(service.findAllByUserId(USER_ID, 0))
                 .willReturn(listToken);
-
+        */
         mvc.perform(
                 MockMvcRequestBuilders
                         .get(GET_URL)

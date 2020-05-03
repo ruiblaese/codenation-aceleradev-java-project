@@ -14,7 +14,7 @@ public enum Level {
         this.description = description;
     }
 
-    private int getId() {
+    public int getId() {
         return id;
     }
 

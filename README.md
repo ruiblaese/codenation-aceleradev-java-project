@@ -57,9 +57,9 @@ Deve permitir a busca de um evento por um ID, dessa maneira exibindo o LOG desse
 * Acesso por multiplos sistemas :heavy_check_mark:
 * Permitir gravar registros de eventos :heavy_check_mark:
 * Permitir listagem dos eventos :heavy_check_mark:
-  * Filtrar eventos por qualquer parâmetro especificado :x:
-  * Suportar paginação :x:
-  * Suportar ordenação por diferentes tipos de atributos :x:
+  * Filtrar eventos por qualquer parâmetro especificado :heavy_check_mark:
+  * Suportar paginação :heavy_check_mark:
+  * Suportar ordenação por diferentes tipos de atributos :heavy_check_mark:
 * Permitir busca de evento por um Id :heavy_check_mark:
 
 ### Detalhes do projeto
